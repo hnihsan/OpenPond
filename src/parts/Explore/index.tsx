@@ -45,16 +45,11 @@ export default function Explore({ classname }: Props) {
             </>
           )}
 
-          {nfts.map((nft) => {
-            console.log(nft);
-            return (
-              <>
-                <div className="test">
-                  <ExploreItem nft={nft} />
-                </div>
-              </>
-            );
-          })}
+          {nfts.map((nft, i) => (
+            <div className="test" key={i}>
+              <ExploreItem nft={nft} />
+            </div>
+          ))}
         </div>
       </div>
     </section>

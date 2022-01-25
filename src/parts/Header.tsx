@@ -1,20 +1,74 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
 import HamburgerIcon from '@public/images/hamburger-menu.svg';
 
-export default function Navbar() {
+import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
+import { useUser } from '@data/useUser';
+import { injected } from '@utils/Connector';
+import { login, logout } from '@services/auth';
+export default function Header() {
+  const { user, loading, mutate } = useUser({});
+
   const [showNavbar, setShowNavbar] = useState(false);
 
   const toggle = () => {
     setShowNavbar(!showNavbar);
   };
 
-  const handlerLogout = async () => {
-    // await logout();
-    toast.success('Success logout');
-  };
+  const {
+    active,
+    account,
+    chainId,
+    library,
+    connector,
+    error,
+    activate,
+    deactivate,
+  } = useWeb3React();
+
+  async function connect() {
+    try {
+      await activate(injected);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function disconnect() {
+    try {
+      await logout();
+      deactivate();
+    } catch (error) {
+      console.error(error);
+      return Promise.reject();
+    }
+  }
+
+  useEffect(() => {
+    if (error) {
+      if (error instanceof UnsupportedChainIdError) {
+        toast.error(error.message);
+      }
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (account) {
+      mutate(
+        login({
+          address: account,
+        })
+      );
+    }
+  }, [account]);
+
+  useEffect(() => {
+    if (user?.address) {
+      connect();
+    }
+  }, [user]);
 
   return (
     <>
@@ -23,7 +77,7 @@ export default function Navbar() {
           <Link href="/" passHref>
             <div className="flex items-center justify-center cursor-pointer">
               <Image src="/images/logo.png" alt="logo" width={20} height={20} />
-              <a className="font-bold ml-1 text-2lg">$Dollar$</a>
+              <a className="font-bold ml-1 text-2lg">$dollar$</a>
             </div>
           </Link>
           <div className="block lg:hidden">
@@ -52,11 +106,40 @@ export default function Navbar() {
             </ul>
 
             <div className="inline-flex flex-col lg:flex-row text-left justify-start">
-              <Link href="/signup">
-                <a className="inline-block border rounded-full px-5 py-2 text-left">
+              {!active && (
+                <button
+                  className="inline-block border rounded-full px-5 py-2 text-left"
+                  onClick={connect}
+                >
                   Connect Metamask
-                </a>
-              </Link>
+                </button>
+              )}
+
+              {active && (
+                <li className="flex items-center">
+                  <div className="dropdown flex items-center justify-between cursor-pointer py-3 px-4">
+                    <Link href={`#`}>
+                      <a className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-100px font-bold text-sm ml-2">
+                        {account}
+                      </a>
+                    </Link>
+
+                    <div className="dropdown-menu">
+                      <div className="arrow-icon"></div>
+                      <ul>
+                        <li className="flex items-center ">
+                          <button
+                            className="hover:text-gray-300 text-sm font-semibold px-4 py-3"
+                            onClick={disconnect}
+                          >
+                            Logout
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              )}
             </div>
           </div>
         </div>

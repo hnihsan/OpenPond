@@ -7,7 +7,7 @@ export default function ExploreItem({ nft }: any) {
       <figure>
         <Img
           className="rounded-xl w-full"
-          src={nft.image_preview_url}
+          src={nft.image_url}
           alt="trending-icon"
           width="100%"
           height="100%"
@@ -55,7 +55,7 @@ export default function ExploreItem({ nft }: any) {
 
           <p className="text-gray-400 text-sm">{nft?.price ?? '0'} ETH</p>
 
-          <Link href="/arts/woman-in-black">
+          <Link href="#">
             <a className="inline-block font-semibold text-blue-500 mt-3 link-wrapped">
               Buy Now
             </a>

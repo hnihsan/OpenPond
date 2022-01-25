@@ -20,7 +20,7 @@ module.exports = withPlugins(
   ],
   {
     images: {
-      domains: ['cloudflare-ipfs.com'],
+      domains: ['cloudflare-ipfs.com', 'lh3.googleusercontent.com'],
     },
   }
 );

@@ -1,7 +1,16 @@
 import type { NextPage } from 'next';
-
+import Layout from '@components/Layout/Default';
+import Explore from '@parts/Explore/index';
 const Home: NextPage = () => {
-  return <section className="container my-32">Halo, Dunia!</section>;
+  return (
+    <>
+      <Layout>
+        <section className="my-10">
+          <Explore />
+        </section>
+      </Layout>
+    </>
+  );
 };
 
 export default Home;

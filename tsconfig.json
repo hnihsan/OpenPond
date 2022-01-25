@@ -20,9 +20,18 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@/public/*": [
+      "@public/*": [
         "public/*"
-      ]
+      ],
+      "@parts/*": [
+        "src/parts/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@data/*": [
+        "src/data/*"
+      ],
     },
     "incremental": true
   },

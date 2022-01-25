@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+header {
+  background: #fff;
+  box-shadow: 0px 2px 4px rgba(84, 84, 84, 0.0567482);
+}
+
+.card {
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 0px #00000014;
+  border-radius: 20px;
+  padding: 15px;
+}
+
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: dense;
+  row-gap: 10px;
+  column-gap: 10px;
+  position: relative;
+  z-index: 3;
+}
+
+.container-grid .item.column-1 {
+  grid-column-end: span 1;
+}
+.container-grid .item.column-2 {
+  grid-column-end: span 2;
+}
+.container-grid .item.column-3 {
+  grid-column-end: span 3;
+}
+.container-grid .item.column-4 {
+  grid-column-end: span 4;
+}
+.container-grid .item.column-5 {
+  grid-column-end: span 5;
+}
+.container-grid .item.column-6 {
+  grid-column-end: span 6;
+}
+.container-grid .item.column-7 {
+  grid-column-end: span 7;
+}
+.container-grid .item.column-8 {
+  grid-column-end: span 8;
+}
+.container-grid .item.column-9 {
+  grid-column-end: span 9;
+}
+.container-grid .item.column-10 {
+  grid-column-end: span 10;
+}
+.container-grid .item.column-11 {
+  grid-column-end: span 11;
+}
+.container-grid .item.column-12 {
+  grid-column-end: span 12;
+}
+
+.container-grid .item.row-1 {
+  grid-row-end: span 1;
+}
+.container-grid .item.row-2 {
+  grid-row-end: span 2;
+}
+.container-grid .item.row-3 {
+  grid-row-end: span 3;
+}
+.container-grid .item.row-4 {
+  grid-row-end: span 4;
+}
+
+/* .slick-slide > div {
+  margin: 0 20px;
+}
+.slick-list {
+  margin: 0 -20px;
+}
+
+.slick-list {
+  padding: 10px 0 !important;
+} */
+
+.slick-dots {
+  text-align: left !important;
+}
+
+.slick-dots li {
+  width: 10px !important;
+  height: 10px !important;
+}
+.slick-dots li button {
+  width: 10px !important;
+  height: 10px !important;
+  padding: 0 !important;
+}
+.slick-dots li button:before {
+  font-size: 10px !important;
+  left: 25px !important;
+}
+
+.hero .card {
+  padding: 30px !important;
+}
+
+.ReactModal__Body--open {
+  overflow-y: hidden;
+}
+
+.dropdown {
+  @apply relative;
+}
+
+.dropdown-menu {
+  @apply invisible opacity-0 bg-gray-100 absolute right-0 transition-all duration-200;
+  top: 50px;
+  box-shadow: 0px 2px 4px rgba(84, 84, 84, 0.0567482);
+  min-width: 181px;
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.dropdown-menu .arrow-icon {
+  position: absolute;
+  right: 15px;
+  top: -10px;
+}
+
+.dropdown-menu .arrow-icon svg {
+  fill: rgb(246, 246, 246);
+}
+
+.dropdown:hover .dropdown-menu {
+  @apply visible opacity-100;
+}
+
+.link-wrapped:before {
+  @apply cursor-pointer z-10 inset-0 absolute;
+  content: '';
+}
+
+.overlay {
+  display: block;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  overflow-y: hidden;
+}
+
+main {
+  min-height: calc(100vh - 309px);
+}
+
+.truncate {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

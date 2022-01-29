@@ -11,6 +11,8 @@ export default function Explore({ classname }: Props) {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [source, setSource] = useState('OPENSEA');
+
   useEffect(() => {
     setIsLoading(true);
     setInterval(() => {
@@ -27,8 +29,41 @@ export default function Explore({ classname }: Props) {
           <h1 className="font-bold text-3xl">Explore</h1>
         </div>
 
+        <div className="mt-4 rounded">
+          <ul id="tabs" className="inline-flex w-full">
+            <li
+              className={`font-semibold text-gray-800 border-b-2 rounded-t ${
+                source === 'OPENSEA' ? 'border-blue-500' : ''
+              }`}
+            >
+              <button
+                className="px-4 py-2"
+                onClick={() => {
+                  setSource('OPENSEA');
+                }}
+              >
+                OpenSea
+              </button>
+            </li>
+            <li
+              className={`font-semibold text-gray-800 border-b-2 rounded-t ${
+                source === 'RARIBLE' ? 'border-blue-500' : ''
+              }`}
+            >
+              <button
+                className="px-4 py-2"
+                onClick={() => {
+                  setSource('RARIBLE');
+                }}
+              >
+                Rarible
+              </button>
+            </li>
+          </ul>
+        </div>
+
         <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6 -mx-5">
-          {isLoading && (
+          {source === 'OPENSEA' && isLoading && (
             <>
               <div className="px-5">
                 <TrendingCardSkeleton />
@@ -45,11 +80,12 @@ export default function Explore({ classname }: Props) {
             </>
           )}
 
-          {nfts.map((nft, i) => (
-            <div className="test" key={i}>
-              <ExploreItem nft={nft} />
-            </div>
-          ))}
+          {source === 'OPENSEA' &&
+            nfts.map((nft, i) => (
+              <div className="test" key={i}>
+                <ExploreItem nft={nft} />
+              </div>
+            ))}
         </div>
       </div>
     </section>

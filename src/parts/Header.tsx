@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-import HamburgerIcon from '@public/images/hamburger-menu.svg';
+// import HamburgerIcon from '@public/images/hamburger-menu.svg';
 
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
 import { useUser } from '@data/useUser';
@@ -86,7 +86,7 @@ export default function Header() {
               id="nav-toggle"
               className="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
             >
-              <HamburgerIcon />
+              {/* <HamburgerIcon /> */}
             </button>
           </div>
           <div

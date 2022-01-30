@@ -6,7 +6,13 @@ export default function ExploreItem({ nft }: any) {
       <figure>
         <Img
           className="rounded-xl w-full"
-          src={nft?.image_url === '' ? 'https://fakeimg.pl/640x360' : nft?.image_url}
+          src={`/api/imageproxy?url=${encodeURIComponent(
+            nft?.meta?.image
+              ? nft?.meta?.image?.url?.ORIGINAL
+              : nft?.meta?.animation
+              ? nft?.meta?.animation?.url?.ORIGINAL
+              : 'https://fakeimg.pl/640x360',
+          )}`}
           alt="trending-icon"
           width="100%"
           height="100%"
@@ -18,14 +24,14 @@ export default function ExploreItem({ nft }: any) {
               <div className="avatar-wrapper relative">
                 <img
                   className="max-w-full rounded-full"
-                  src={nft?.creator?.profile_img_url ?? ''}
-                  alt={nft?.creator?.user?.username ?? 'creator'}
+                  src="https://storage.googleapis.com/opensea-static/opensea-profile/33.png"
+                  alt={nft?.creators[0]?.account ?? 'creator'}
                   width={23}
                 />
               </div>
 
               <h3 className="text-sm text-black font-medium ml-2 text-opacity-50 truncate">
-                {nft?.creator?.user?.username ?? '<null creator>'}
+                {nft?.creators[0]?.account ?? '<null creator>'}
               </h3>
             </div>
             <div className="flex items-center">
@@ -39,7 +45,9 @@ export default function ExploreItem({ nft }: any) {
               />
             </div>
           </div>
-          <h3 className="font-semibold mt-3">{nft?.name ?? '<null asset name>'}</h3>
+          <h3 className="font-semibold mt-3">
+            {nft?.meta?.name ?? '<null asset name>'}
+          </h3>
         </figcaption>
       </figure>
     </div>

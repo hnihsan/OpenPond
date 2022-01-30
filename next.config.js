@@ -7,26 +7,13 @@ const withImages = require('next-images');
 
 const path = require('path');
 
-module.exports = withPlugins(
-  [
-    withCss({}),
-    withImages({}),
-    withReactSvg({
-      include: path.resolve(__dirname, './public/images'),
-      webpack(config, options) {
-        return config;
-      },
-    }),
-  ],
-  {
-    images: {
-      domains: [
-        'cloudflare-ipfs.com',
-        'lh3.googleusercontent.com',
-        'images.unsplash.com',
-        'storage.opensea.io',
-        'fakeimg.pl',
-      ],
+module.exports = withPlugins([
+  withCss({}),
+  withImages({}),
+  withReactSvg({
+    include: path.resolve(__dirname, './public/images'),
+    webpack(config, options) {
+      return config;
     },
-  },
-);
+  }),
+]);

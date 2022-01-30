@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import TrendingCardSkeleton from '@components/Skeleton/TrendingCardSkeleton';
 import ExploreItem from './ExploreItem';
-import FakeNfts from '@data/fake-nfts.json';
+import RaribleExploreItem from './RaribleExploreItem';
 import axios from 'axios';
 interface Props {
   classname?: string | null;
@@ -11,28 +11,55 @@ interface Props {
 export default function Explore({ classname }: Props) {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const [source, setSource] = useState('OPENSEA');
+  const [source, setSource] = useState('RARIBLE');
   const [offsetOpensea, setOffsetOpensea] = useState(0);
+
+  // rarible
+  const [continuation, setContinuation] = useState('');
+  const [nftsRarible, setNftsRarible] = useState([]);
+  const [isLoadingRarible, setIsLoadingRarible] = useState(false);
 
   const loadMore = async () => {
     try {
       setIsLoading(true);
       const response: any = await axios.get(
-        `https://testnets-api.opensea.io/api/v1/assets?order_direction=desc&offset=${offsetOpensea}&limit=50`,
+        `https://testnets-api.opensea.io/api/v1/assets?order_direction=desc&offset=${offsetOpensea}&limit=25`,
       );
       const newNFTs = response.data?.assets;
       setOffsetOpensea(offsetOpensea + 1);
       setNfts([...nfts, ...newNFTs]);
 
+      console.log(nfts);
       setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
+      console.error(error);
+    }
+  };
+
+  const loadMoreRarible = async () => {
+    try {
+      setIsLoadingRarible(true);
+      const response: any = await axios.get(
+        `https://ethereum-api.rarible.org/v0.1/nft/items/all?size=20&continuation=${continuation}`,
+      );
+      const raribleResponse = response.data;
+      const newNfts = raribleResponse.items;
+      setContinuation(raribleResponse.continuation);
+      setNftsRarible([...nftsRarible, ...newNfts]);
+      console.log(newNfts);
+      console.log(nftsRarible);
+
+      setIsLoadingRarible(false);
+    } catch (error) {
+      setIsLoadingRarible(false);
       console.error(error);
     }
   };
 
   useEffect(() => {
     loadMore();
+    loadMoreRarible();
   }, []);
 
   return (
@@ -75,6 +102,7 @@ export default function Explore({ classname }: Props) {
           </ul>
         </div>
 
+        {/* opensea content */}
         <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6 -mx-5">
           {source === 'OPENSEA' &&
             nfts.map((nft, i) => {
@@ -98,10 +126,45 @@ export default function Explore({ classname }: Props) {
             </>
           )}
         </div>
-        {!isLoading && (
+        {source === 'OPENSEA' && !isLoading && (
           <div className="flex justify-center">
             <button
               onClick={loadMore}
+              className="bg-white hover:bg-blue-500 hover:text-white text-blue-500 font-bold py-2 px-4 border border-blue-500 rounded"
+            >
+              Load More
+            </button>
+          </div>
+        )}
+
+        {/* rarible content */}
+        <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6 -mx-5">
+          {source === 'RARIBLE' &&
+            nftsRarible.map((nft, i) => {
+              return <RaribleExploreItem nft={nft} key={i} />;
+            })}
+
+          {source === 'RARIBLE' && isLoadingRarible && (
+            <>
+              <div className="px-5">
+                <TrendingCardSkeleton />
+              </div>
+              <div className="px-5">
+                <TrendingCardSkeleton />
+              </div>
+              <div className="px-5">
+                <TrendingCardSkeleton />
+              </div>
+              <div className="px-5">
+                <TrendingCardSkeleton />
+              </div>
+            </>
+          )}
+        </div>
+        {source === 'RARIBLE' && !isLoadingRarible && (
+          <div className="flex justify-center">
+            <button
+              onClick={loadMoreRarible}
               className="bg-white hover:bg-blue-500 hover:text-white text-blue-500 font-bold py-2 px-4 border border-blue-500 rounded"
             >
               Load More

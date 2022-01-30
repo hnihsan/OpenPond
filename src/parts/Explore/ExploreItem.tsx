@@ -6,7 +6,9 @@ export default function ExploreItem({ nft }: any) {
       <figure>
         <Img
           className="rounded-xl w-full"
-          src={nft?.image_url === '' ? 'https://fakeimg.pl/640x360' : nft?.image_url}
+          src={`/api/imageproxy?url=${encodeURIComponent(
+            nft?.image_url === '' ? 'https://fakeimg.pl/640x360' : nft?.image_url,
+          )}`}
           alt="trending-icon"
           width="100%"
           height="100%"
@@ -27,16 +29,6 @@ export default function ExploreItem({ nft }: any) {
               <h3 className="text-sm text-black font-medium ml-2 text-opacity-50 truncate">
                 {nft?.creator?.user?.username ?? '<null creator>'}
               </h3>
-            </div>
-            <div className="flex items-center">
-              <img
-                style={{ width: 18, height: 13 }}
-                src="/images/eye.png"
-                className="max-w-full"
-                width="13px"
-                height="13px"
-                alt=""
-              />
             </div>
           </div>
           <h3 className="font-semibold mt-3">{nft?.name ?? '<null asset name>'}</h3>

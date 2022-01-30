@@ -34,16 +34,6 @@ export default function ExploreItem({ nft }: any) {
                 {nft?.creators[0]?.account ?? '<null creator>'}
               </h3>
             </div>
-            <div className="flex items-center">
-              <img
-                style={{ width: 18, height: 13 }}
-                src="/images/eye.png"
-                className="max-w-full"
-                width="13px"
-                height="13px"
-                alt=""
-              />
-            </div>
           </div>
           <h3 className="font-semibold mt-3">
             {nft?.meta?.name ?? '<null asset name>'}

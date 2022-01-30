@@ -59,7 +59,7 @@ export default function Header() {
       mutate(
         login({
           address: account,
-        })
+        }),
       );
     }
   }, [account]);
@@ -77,7 +77,7 @@ export default function Header() {
           <Link href="/" passHref>
             <div className="flex items-center justify-center cursor-pointer">
               <Image src="/images/logo.png" alt="logo" width={20} height={20} />
-              <a className="font-bold ml-1 text-2lg">$dollar$</a>
+              <a className="font-bold ml-1 text-2lg">OpenPond</a>
             </div>
           </Link>
           <div className="block lg:hidden">

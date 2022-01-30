@@ -10,7 +10,7 @@ export default function DefaultLayout({ children }: Props): ReactElement {
   return (
     <>
       <Head>
-        <title>$dollar$</title>
+        <title>OpenPond</title>
       </Head>
       <Header />
       {children}

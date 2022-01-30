@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-class KolekioDocument extends Document {
+class OpenPondDcoument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
@@ -24,4 +24,4 @@ class KolekioDocument extends Document {
   }
 }
 
-export default KolekioDocument;
+export default OpenPondDcoument;

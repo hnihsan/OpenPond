@@ -20,7 +20,13 @@ module.exports = withPlugins(
   ],
   {
     images: {
-      domains: ['cloudflare-ipfs.com', 'lh3.googleusercontent.com'],
+      domains: [
+        'cloudflare-ipfs.com',
+        'lh3.googleusercontent.com',
+        'images.unsplash.com',
+        'storage.opensea.io',
+        'fakeimg.pl',
+      ],
     },
-  }
+  },
 );

@@ -1,0 +1,6 @@
+{
+  "name": "openpond_opensea_testnet_api",
+  "mountedBinaries": {
+    "curl": "/usr/bin/curl"
+  }
+}

@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
 import TrendingCardSkeleton from '@components/Skeleton/TrendingCardSkeleton';
-import ExploreItem from './ExploreItem';
+
 import RaribleExploreItem from './RaribleExploreItem';
 import axios from 'axios';
+import OpenSeaItem from './OpenSeaItem';
+import RaribleItem from './RaribleItem';
+import FakeNfts from '@data/fake-nfts.json';
+
 interface Props {
   classname?: string | null;
+  openseaNfts: [];
+  raribleNfts: [];
 }
 
-export default function Explore({ classname }: Props) {
+export default function Explore({ classname, openseaNfts, raribleNfts }: Props) {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [source, setSource] = useState('OPENSEA');
@@ -106,7 +112,7 @@ export default function Explore({ classname }: Props) {
         <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6 -mx-5">
           {source === 'OPENSEA' &&
             nfts.map((nft, i) => {
-              return <ExploreItem nft={nft} key={i} />;
+              return <OpenSeaItem nft={nft} key={i} />;
             })}
 
           {source === 'OPENSEA' && isLoading && (
@@ -137,30 +143,30 @@ export default function Explore({ classname }: Props) {
           </div>
         )}
 
-        {/* rarible content */}
-        <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6 -mx-5">
-          {source === 'RARIBLE' &&
-            nftsRarible.map((nft, i) => {
-              return <RaribleExploreItem nft={nft} key={i} />;
-            })}
+        {source === 'RARIBLE' &&
+          raribleNfts.map((nft, i) => (
+            <div className="rarible_item" key={i}>
+              <RaribleItem nft={nft} />
+            </div>
+          ))}
 
-          {source === 'RARIBLE' && isLoadingRarible && (
-            <>
-              <div className="px-5">
-                <TrendingCardSkeleton />
-              </div>
-              <div className="px-5">
-                <TrendingCardSkeleton />
-              </div>
-              <div className="px-5">
-                <TrendingCardSkeleton />
-              </div>
-              <div className="px-5">
-                <TrendingCardSkeleton />
-              </div>
-            </>
-          )}
-        </div>
+        {source === 'RARIBLE' && isLoading && (
+          <>
+            <div className="px-5">
+              <TrendingCardSkeleton />
+            </div>
+            <div className="px-5">
+              <TrendingCardSkeleton />
+            </div>
+            <div className="px-5">
+              <TrendingCardSkeleton />
+            </div>
+            <div className="px-5">
+              <TrendingCardSkeleton />
+            </div>
+          </>
+        )}
+
         {source === 'RARIBLE' && !isLoadingRarible && (
           <div className="flex justify-center">
             <button

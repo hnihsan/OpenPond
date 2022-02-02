@@ -1,0 +1,34 @@
+import "@fluencelabs/aqua-lib/builtin.aqua"
+
+const RARIBLE_API_NODE_PEER_ID ?= "12D3KooWD7CvsYcpF9HE9CCV9aY3SJ317tkXVykjtZnht2EbzDPm"
+const RARIBLE_API_SERVICE_ID ?= "749ccd29-4f4d-46be-8c4b-8bb9479dddbf"
+
+service RaribleTestnetApi:
+  download(url: string) -> string
+  get_all_assets(size: string, continue_token: string) -> string
+  get_owned_assets_by_collection(collection_addr: string, size: string) -> string
+  get_owned_collections(owner_address: string, size: string) -> string
+
+func download(url: string) -> string :
+  on RARIBLE_API_NODE_PEER_ID:
+    RaribleTestnetApi RARIBLE_API_SERVICE_ID
+    res <- RaribleTestnetApi.download(url)
+  <- res
+
+func get_all_assets(size: string, continue_token: string) -> string :
+  on RARIBLE_API_NODE_PEER_ID:
+    RaribleTestnetApi RARIBLE_API_SERVICE_ID
+    res <- RaribleTestnetApi.get_all_assets(size, continue_token)
+  <- res
+
+func get_owned_collections(owner_address: string, size: string) -> string :
+  on RARIBLE_API_NODE_PEER_ID:
+    RaribleTestnetApi RARIBLE_API_SERVICE_ID
+    res <- RaribleTestnetApi.get_owned_collections(owner_address, size)
+  <- res
+
+func get_owned_assets_by_collection(collection_addr: string, size: string) -> string :
+  on RARIBLE_API_NODE_PEER_ID:
+    RaribleTestnetApi RARIBLE_API_SERVICE_ID
+    res <- RaribleTestnetApi.get_owned_assets_by_collection(collection_addr, size)
+  <- res

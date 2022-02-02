@@ -1,0 +1,48 @@
+{
+  "total": 1,
+  "continuation": "1643758118518_0xb66a603f4cfe17e3d27b87a8bfcad319856518b8:0xe9933ff92aacd8b707b7564e107dc71086ca2ff400000000000000000000001b",
+  "items": [
+    {
+      "id": "0xb66a603f4cfe17e3d27b87a8bfcad319856518b8:105649061765964280107021782246253167589095741809111400610527875317167588114459",
+      "contract": "0xb66a603f4cfe17e3d27b87a8bfcad319856518b8",
+      "tokenId": "105649061765964280107021782246253167589095741809111400610527875317167588114459",
+      "creators": [
+        {
+          "account": "0xe9933ff92aacd8b707b7564e107dc71086ca2ff4",
+          "value": 10000
+        }
+      ],
+      "supply": "1",
+      "lazySupply": "1",
+      "owners": [
+        "0xe9933ff92aacd8b707b7564e107dc71086ca2ff4"
+      ],
+      "royalties": [
+        {
+          "account": "0xe9933ff92aacd8b707b7564e107dc71086ca2ff4",
+          "value": 4000
+        }
+      ],
+      "lastUpdatedAt": "2022-02-01T23:28:38.518Z",
+      "pending": [],
+      "deleted": false,
+      "meta": {
+        "name": "The Dummy Sword GIF",
+        "description": "A weapon to protect you and your dummies",
+        "attributes": [],
+        "image": {
+          "url": {
+            "ORIGINAL": "https://rarible.mypinata.cloud/ipfs/QmNW35X7vuErctf4tGkxmoFD1HLCD8pPo7KacLEUDQA51y/image.gif"
+          },
+          "meta": {
+            "ORIGINAL": {
+              "type": "image/gif",
+              "width": 375,
+              "height": 375
+            }
+          }
+        }
+      }
+    }
+  ]
+}

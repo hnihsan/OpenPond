@@ -1,0 +1,6 @@
+{
+  "name": "openpond_rarible_testnet_api",
+  "mountedBinaries": {
+    "curl": "/usr/bin/curl"
+  }
+}

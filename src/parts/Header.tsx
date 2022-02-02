@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Image from 'next/image';
-// import HamburgerIcon from '@public/images/hamburger-menu.svg';
+import HamburgerIcon from '@public/images/hamburger-menu.svg';
 
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
 import { useUser } from '@data/useUser';
@@ -86,7 +86,7 @@ export default function Header() {
               id="nav-toggle"
               className="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"
             >
-              {/* <HamburgerIcon /> */}
+              <HamburgerIcon />
             </button>
           </div>
           <div
@@ -95,15 +95,7 @@ export default function Header() {
             }`}
             id="nav-content"
           >
-            <ul className="list-reset lg:flex justify-center flex-1 items-center">
-              {/* <li className="">
-                <Link href="/">
-                  <a className="inline-block py-2 px-4 text-black">
-                    How it Works
-                  </a>
-                </Link>
-              </li> */}
-            </ul>
+            <ul className="list-reset lg:flex justify-center flex-1 items-center"></ul>
 
             <div className="inline-flex flex-col lg:flex-row text-left justify-start">
               {!active && (
@@ -127,6 +119,13 @@ export default function Header() {
                     <div className="dropdown-menu">
                       <div className="arrow-icon"></div>
                       <ul>
+                        <li className="flex items-center ">
+                          <Link href="/my-assets">
+                            <a className="hover:text-gray-300 text-sm font-semibold px-4 py-3">
+                              My Assets
+                            </a>
+                          </Link>
+                        </li>
                         <li className="flex items-center ">
                           <button
                             className="hover:text-gray-300 text-sm font-semibold px-4 py-3"

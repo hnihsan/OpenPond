@@ -11,7 +11,7 @@ interface Props {
 export default function Explore({ classname }: Props) {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [source, setSource] = useState('RARIBLE');
+  const [source, setSource] = useState('OPENSEA');
   const [offsetOpensea, setOffsetOpensea] = useState(0);
 
   // rarible

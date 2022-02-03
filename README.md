@@ -1,34 +1,47 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# OpenPond
+An simple web application for displaying NFTs from OpenSea and Rarible marketplaces, including your owned/created NFTs which linked to your wallet. Built on [Fluence](https://fluence.network/) and [Next.js](https://nextjs.org/)
+## Usage
 
-First, run the development server:
+Build and run the application
 
 ```bash
-npm run dev
-# or
-yarn dev
+npm install
+npm run compile-aqua
+npm run start:dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Fluence Services
+OpenPond services built using [Marine Rust SDK](https://doc.fluence.dev/docs/knowledge_aquamarine/marine/marine-rs-sdk)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+To compile and run these services in your own Environment, follow these steps below *(optional)*:
+> This step is optional because the services used in this application is already deployed and hosted in Fluence Krasnodar Network
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+First make sure you have installed all the required tools in your environment, the setup can be found in this docs: [Setting Up Your Environment](https://doc.fluence.dev/docs/tutorials_tutorials/recipes_setting_up).
 
-## Learn More
+Then run the following command :
+```bash
+cd fluence-services
+./build.sh
+```
+After *.wasm* files created inside the *artifacts/* folder, then you can deploy the services on your own fluence node or redeployed it in some Flunce hosted network, with this command :
+```bash
+fldist  \
+  --node-addr /ip4/127.0.0.1/tcp/9999/ws/p2p/{node_id}  new_service \
+  --ms artifacts/opensea_testnet_api.wasm:opensea_testnet_api/config.json \
+  -n openpond_opensea_testnet_api \
+  --verbose
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+fldist  \
+  --node-addr /ip4/127.0.0.1/tcp/9999/ws/p2p/{node_id}  new_service \
+  --ms artifacts/rarible_testnet_api.wasm:rarible_testnet_api/config.json \
+  -n openpod_rarible_testnet_api \
+  --verbose
+```
+## File structure
+- `/aqua` Contain aqua files for interacting with services
+- `/fluence-services` Contain services logic built with rust
+- `/src` Next.js front-end files

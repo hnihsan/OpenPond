@@ -1,11 +1,11 @@
 import "@fluencelabs/aqua-lib/builtin.aqua"
 
-const OPENSEA_API_NODE_PEER_ID ?= "12D3KooWFtf3rfCDAfWwt6oLZYZbDfn9Vn7bv7g6QjjQxUUEFVBt"
-const OPENSEA_API_SERVICE_ID ?= "b10c29a9-f011-493c-9175-12d9c205d41e"
+const OPENSEA_API_NODE_PEER_ID ?= "12D3KooWDUszU2NeWyUVjCXhGEt1MoZrhvdmaQQwtZUriuGN1jTr"
+const OPENSEA_API_SERVICE_ID ?= "abddf344-0348-4849-b3c3-eb1975d5db25"
 
 service OpenseaTestnetApi:
   download(url: string) -> string
-  get_all_assets(offset: string, limit: string) -> string
+  get_all_assets(offset: string, limit: string, order: string) -> string
   get_owned_assets_by_collection(collection_addr: string, offset: string, limit: string) -> string
   get_owned_collections(owner_address: string, offset: string, limit: string) -> string
 
@@ -15,10 +15,10 @@ func download(url: string) -> string :
     res <- OpenseaTestnetApi.download(url)
   <- res
 
-func get_all_assets(offset: string, limit: string) -> string :
+func get_all_assets(offset: string, limit: string, order: string) -> string :
   on OPENSEA_API_NODE_PEER_ID:
     OpenseaTestnetApi OPENSEA_API_SERVICE_ID
-    res <- OpenseaTestnetApi.get_all_assets(offset, limit)
+    res <- OpenseaTestnetApi.get_all_assets(offset, limit, order)
   <- res
 
 func get_owned_collections(owner_address: string, offset: string, limit: string) -> string :
@@ -26,7 +26,7 @@ func get_owned_collections(owner_address: string, offset: string, limit: string)
     OpenseaTestnetApi OPENSEA_API_SERVICE_ID
     res <- OpenseaTestnetApi.get_owned_collections(owner_address, offset, limit)
   <- res
-  
+
 func get_owned_assets_by_collection(collection_addr: string, offset: string, limit: string) -> string :
   on OPENSEA_API_NODE_PEER_ID:
     OpenseaTestnetApi OPENSEA_API_SERVICE_ID

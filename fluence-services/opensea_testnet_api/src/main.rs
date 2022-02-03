@@ -39,9 +39,9 @@
  }
 
  #[marine]
- pub fn get_all_assets(offset: String, limit: String) -> String {
+ pub fn get_all_assets(offset: String, limit: String, order: String) -> String {
     log::info!("Get All Assets with Limit:{} and Offset:{} \n", limit, offset);
-    let url = format!("https://testnets-api.opensea.io/api/v1/assets?order_direction=desc&offset={}&limit={}", offset, limit);
+    let url = format!("https://testnets-api.opensea.io/api/v1/assets?order_direction={}&offset={}&limit={}", order, offset, limit);
     let result = curl(vec![url]);
 
     String::from_utf8(result.stdout).unwrap()

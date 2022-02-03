@@ -30,7 +30,7 @@ export default {
     }
   },
 
-  async getOwnedCollections(owner_address, size = 20) {
+  async getOwnedCollections({ owner_address, size = 20 }) {
     try {
       let response_string = await get_owned_collections(
         owner_address,

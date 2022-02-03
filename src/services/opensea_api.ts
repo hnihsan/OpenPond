@@ -20,7 +20,11 @@ export default {
     }
   },
 
-  async getOwnedAssetsByCollection(collection_addr, offset = 0, limit = 20) {
+  async getOwnedAssetsByCollection({
+    collection_addr,
+    offset = 0,
+    limit = 20,
+  }) {
     try {
       let response_string = await get_owned_assets_by_collection(
         collection_addr,
@@ -35,7 +39,7 @@ export default {
     }
   },
 
-  async getOwnedCollections(owner_address, offset = 0, limit = 20) {
+  async getOwnedCollections({ owner_address, offset = 0, limit = 20 }) {
     try {
       let response = await get_owned_collections(
         owner_address,

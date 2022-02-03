@@ -1,25 +1,85 @@
 import type { NextPage } from 'next';
-import Layout from '@components/Layout/Default';
 import { useEffect, useState } from 'react';
-import FakeNfts from '@data/fake-nfts.json';
+import { useWeb3React } from '@web3-react/core';
+
+import Layout from '@components/Layout/Default';
+import { useUser } from '@data/useUser';
 import OpenSeaCollectionItem from '@parts/MyAssets/opensea/collections';
 import OpenSeaOwnedItem from '@parts/MyAssets/opensea/owned';
 import RaribleCollectionItem from '@parts/MyAssets/rarible/collections';
 import RaribleOwnedItem from '@parts/MyAssets/rarible/owned';
 
+// Fluence test
+import { Fluence, setLogLevel, FluencePeer } from '@fluencelabs/fluence';
+import { krasnodar, Node } from '@fluencelabs/fluence-network-environment';
+import OpenSeaApi from '@services/opensea_api';
+import RaribleApi from '@services/rarible_api';
+
 const MyCollections: NextPage = () => {
+  const { account } = useWeb3React();
+
+  const { user, loading, mutate } = useUser({});
+
   const [source, setSource] = useState('OPENSEA');
   const [currentTab, setCurrentTab] = useState('MY_COLLECTIONS');
-  const [isLoading, setIsLoading] = useState(false);
-  const [nfts, setNfts] = useState([]);
+
+  // opensea
+  const [isLoadingOpenseaCollection, setIsLoadingOpenseaCollection] =
+    useState(false);
+  const [openseaCollections, setOpenseaCollections] = useState([]);
+
+  // rarible
+  const [isLoadingRaribleCollection, setIsLoadingRaribleCollection] =
+    useState(false);
+
+  const loadMoreOpenseaCollection = async () => {
+    try {
+      setIsLoadingOpenseaCollection(true);
+
+      await Fluence.start({ connectTo: krasnodar[0] });
+      const newCollections = await OpenSeaApi.getOwnedCollections({
+        owner_address: user?.address,
+      });
+
+      setOpenseaCollections(newCollections);
+      console.log(openseaCollections);
+      setIsLoadingOpenseaCollection(false);
+    } catch (error) {
+      setIsLoadingOpenseaCollection(false);
+      console.error(error);
+    }
+  };
+
+  const loadMoreRaribleCollection = async () => {
+    try {
+      setIsLoadingRaribleCollection(true);
+
+      await Fluence.start({ connectTo: krasnodar[0] });
+      const response = await RaribleApi.getOwnedCollections({
+        owner_address: user?.address,
+        // owner_address: '0xcf2Cf040D7A03fF563e65f0bA73686aCb00f9811',
+      });
+      console.log('rarible');
+      console.log(response);
+    } catch (error) {
+      setIsLoadingRaribleCollection(false);
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setNfts(FakeNfts.assets);
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+    const init = async () => {
+      await loadMoreOpenseaCollection();
+      await loadMoreRaribleCollection();
+    };
+
+    if (!loading) {
+      if (account) {
+        console.log(account);
+        init();
+      }
+    }
+  }, [account]);
 
   return (
     <>
@@ -97,7 +157,11 @@ const MyCollections: NextPage = () => {
 
                 {/* Content Tab */}
                 {source === 'OPENSEA' && currentTab === 'MY_COLLECTIONS' && (
-                  <OpenSeaCollectionItem />
+                  <OpenSeaCollectionItem
+                    collections={openseaCollections}
+                    isLoading={isLoadingOpenseaCollection}
+                    onLoadMore={loadMoreOpenseaCollection}
+                  />
                 )}
                 {source === 'OPENSEA' && currentTab === 'OWNED' && (
                   <OpenSeaOwnedItem />

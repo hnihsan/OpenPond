@@ -1,14 +1,15 @@
 import type { NextPage } from 'next';
 import Layout from '@components/Layout/Default';
 import { useEffect, useState } from 'react';
-import OpenseaExplore from '@parts/Explore/opensea/OpenseaExplore';
 
 // Fluence test
 import { Fluence, setLogLevel, FluencePeer } from '@fluencelabs/fluence';
 import { krasnodar, Node } from '@fluencelabs/fluence-network-environment';
 import OpenSeaApi from '@services/opensea_api';
 import RaribleApi from '@services/rarible_api';
+
 import RaribleExplore from '@parts/Explore/rarible/RaribleExplore';
+import OpenseaExplore from '@parts/Explore/opensea/OpenseaExplore';
 
 const Home: NextPage = () => {
   const [source, setSource] = useState('OPENSEA');

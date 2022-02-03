@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 # OpenPond
 An simple web application for displaying NFTs from OpenSea and Rarible marketplaces, including your owned/created NFTs which linked to your wallet. Built on [Fluence](https://fluence.network/) and [Next.js](https://nextjs.org/)
 ## Usage
@@ -9,6 +7,8 @@ Build and run the application
 ```bash
 npm install
 npm run compile-aqua
+npm run postinstall
+cp .env.example .env.local
 npm run start:dev
 ```
 

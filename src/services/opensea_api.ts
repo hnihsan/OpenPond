@@ -1,9 +1,9 @@
 import { get_all_assets, get_owned_assets_by_collection, get_owned_collections } from "../_aqua/opensea_api";
 
 export default {
-  async getAllAssets(offset = 0, limit = 20){
+  async getAllAssets(offset = 0, limit = 20, order = 'asc'){
     try {
-      let response_string = await get_all_assets(String(offset), String(limit));
+      let response_string = await get_all_assets(String(offset), String(limit), order);
       let response = JSON.parse(response_string);
       return response.assets
     } catch (error) {

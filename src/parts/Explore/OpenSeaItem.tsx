@@ -18,6 +18,7 @@ export default function OpenSeaItem({ nft }: any) {
           src={
             nft?.image_url ||
             nft?.collection?.large_image_url ||
+            nft?.collection?.image_url ||
             '/images/fluence.png'
           }
           alt="trending-icon"

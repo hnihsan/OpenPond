@@ -3,11 +3,9 @@ import { useEffect, useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 
 import Layout from '@components/Layout/Default';
-import OpenSeaCollectionItem from '@parts/MyAssets/opensea/collections';
-import OpenSeaOwnedItem from '@parts/MyAssets/opensea/owned';
+import OpenSeaCollectionItem from '@parts/MyCollections/opensea';
 
-import RaribleCollections from '@parts/MyAssets/rarible/collections';
-import RaribleOwnedItem from '@parts/MyAssets/rarible/owned';
+import RaribleCollections from '@parts/MyCollections/rarible';
 
 // Fluence test
 import { Fluence } from '@fluencelabs/fluence';
@@ -19,7 +17,6 @@ const MyCollections: NextPage = () => {
   const { account } = useWeb3React();
 
   const [source, setSource] = useState('OPENSEA');
-  const [currentTab, setCurrentTab] = useState('MY_COLLECTIONS');
 
   // opensea
   const [isLoadingOpenseaCollection, setIsLoadingOpenseaCollection] =
@@ -83,13 +80,16 @@ const MyCollections: NextPage = () => {
         <section className="my-10">
           <div className="container">
             <div className="header-title flex justify-between">
-              <h1 className="font-bold text-3xl">My Assets</h1>
+              <h1 className="font-bold text-3xl">My Collections</h1>
             </div>
 
-            <div className="flex mt-4 -mx-4">
-              <div className="w-1/12 px-4">
+            <div className="flex mt-4 -mx-4 flex-col md:flex-row">
+              <div className="md:w-1/12 px-4">
                 <div className="rounded sticky top-16">
-                  <ul id="tabs" className="w-full">
+                  <ul
+                    id="tabs"
+                    className="w-full flex flex-row md:flex-col justify-around"
+                  >
                     <li className={`text-gray-800 rounded-t`}>
                       <button
                         className={`py-2 w-full ${
@@ -118,57 +118,19 @@ const MyCollections: NextPage = () => {
                 </div>
               </div>
 
-              <div className="w-11/12 px-4 border-l border-black">
-                {/* Tabs */}
-                <ul id="tabs" className="inline-flex w-full">
-                  <li
-                    className={`font-semibold text-gray-800 border-b-2 rounded-t ${
-                      currentTab === 'MY_COLLECTIONS' ? 'border-blue-500' : ''
-                    }`}
-                  >
-                    <button
-                      className="px-4 py-2"
-                      onClick={() => {
-                        setCurrentTab('MY_COLLECTIONS');
-                      }}
-                    >
-                      My Collections
-                    </button>
-                  </li>
-                  <li
-                    className={`font-semibold text-gray-800 border-b-2 rounded-t ${
-                      currentTab === 'OWNED' ? 'border-blue-500' : ''
-                    }`}
-                  >
-                    <button
-                      className="px-4 py-2"
-                      onClick={() => {
-                        setCurrentTab('OWNED');
-                      }}
-                    >
-                      Owned
-                    </button>
-                  </li>
-                </ul>
-
+              <div className="md:w-11/12 px-4 border-l border-black">
                 {/* Content Tab */}
-                {source === 'OPENSEA' && currentTab === 'MY_COLLECTIONS' && (
+                {source === 'OPENSEA' && (
                   <OpenSeaCollectionItem
                     collections={openseaCollections}
                     isLoading={isLoadingOpenseaCollection}
                   />
                 )}
-                {source === 'OPENSEA' && currentTab === 'OWNED' && (
-                  <OpenSeaOwnedItem />
-                )}
-                {source === 'RARIBLE' && currentTab === 'MY_COLLECTIONS' && (
+                {source === 'RARIBLE' && (
                   <RaribleCollections
                     collections={raribleCollections}
                     isLoading={isLoadingRaribleCollection}
                   />
-                )}
-                {source === 'RARIBLE' && currentTab === 'OWNED' && (
-                  <RaribleOwnedItem />
                 )}
               </div>
             </div>

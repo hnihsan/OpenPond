@@ -59,7 +59,7 @@ export default function Header() {
       mutate(
         login({
           address: account,
-        }),
+        })
       );
     }
   }, [account]);
@@ -76,7 +76,12 @@ export default function Header() {
         <div className="h-full w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2 px-3">
           <Link href="/" passHref>
             <div className="flex items-center justify-center cursor-pointer">
-              <Image src="/images/fluence.png" alt="logo" width={20} height={20} />
+              <Image
+                src="/images/fluence.png"
+                alt="logo"
+                width={20}
+                height={20}
+              />
               <a className="font-bold ml-1 text-2lg">OpenPond</a>
             </div>
           </Link>
@@ -120,9 +125,9 @@ export default function Header() {
                       <div className="arrow-icon"></div>
                       <ul>
                         <li className="flex items-center ">
-                          <Link href="/my-assets">
+                          <Link href="/my-collections">
                             <a className="hover:text-gray-300 text-sm font-semibold px-4 py-3">
-                              My Assets
+                              My Collections
                             </a>
                           </Link>
                         </li>

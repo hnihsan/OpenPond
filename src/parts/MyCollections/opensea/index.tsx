@@ -1,5 +1,5 @@
 import TrendingCardSkeleton from '@components/Skeleton/TrendingCardSkeleton';
-import CollectionItem from '@parts/MyAssets/opensea/collections/CollectionItem';
+import CollectionItem from '@parts/MyCollections/opensea/CollectionItem';
 
 type Props = {
   collections: any[];

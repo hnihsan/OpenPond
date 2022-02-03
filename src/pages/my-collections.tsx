@@ -74,6 +74,21 @@ const MyCollections: NextPage = () => {
     }
   }, [account]);
 
+  if (!account) {
+    return (
+      <Layout>
+        <section className="my-10">
+          <div className="container">
+            <div className="header-title flex justify-between">
+              <h1 className="font-bold text-3xl">My Collections</h1>
+            </div>
+
+            <h3 className="mt-5 text-red-300">Please connect to your wallet</h3>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
   return (
     <>
       <Layout>

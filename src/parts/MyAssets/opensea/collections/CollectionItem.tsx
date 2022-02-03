@@ -22,7 +22,7 @@ export default function OpenseaCollectionItem({ collection }: any) {
           <div className="creator-wrapper flex justify-between">
             <div className="flex items-center mt-3">
               <Link href={`/detail/opensea/${collection?.slug}`}>
-                <a className="text-sm text-black font-medium ml-2 text-opacity-50 link-wrapped">
+                <a className="text-sm text-black font-medium ml-2 text-opacity-50 link-wrapped text-center">
                   {collection?.name}
                 </a>
               </Link>

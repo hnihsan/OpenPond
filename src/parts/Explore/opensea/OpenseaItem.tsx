@@ -1,12 +1,15 @@
 import React from 'react';
 import Img from '@components/Img';
 
-export default function RaribleItem({ nft }: any) {
-  const creator_address = nft?.creators?.account;
+export default function OpenSeaItem({ nft }: any) {
+  const creator_address = nft?.creator?.address;
   const display_address = creator_address
     ? creator_address.substring(0, 12) + '...'
     : 'Creator';
-  const creator_name = display_address;
+  const creator_name = nft?.creator?.user?.username || display_address;
+  const collection_name =
+    nft?.collection?.name || nft?.asset_contract?.name || 'OpenSea Collection';
+  const alternate_nft_name = collection_name + '#' + nft.token_id;
 
   return (
     <div className="item relative p-5">
@@ -14,11 +17,9 @@ export default function RaribleItem({ nft }: any) {
         <Img
           className="rounded-xl w-full"
           src={`/api/imageproxy?url=${encodeURIComponent(
-            nft?.meta?.image
-              ? nft?.meta?.image?.url?.ORIGINAL
-              : nft?.meta?.animation
-              ? nft?.meta?.animation?.url?.ORIGINAL
-              : '/images/fluence.png',
+            nft?.image_url ||
+              nft?.collection?.large_image_url ||
+              `${process.env.NEXT_PUBLIC_FRONTEND_URL}/images/fluence.png`
           )}`}
           alt="trending-icon"
           width="100%"
@@ -31,8 +32,10 @@ export default function RaribleItem({ nft }: any) {
               <div className="avatar-wrapper relative">
                 <img
                   className="max-w-full rounded-full"
-                  src={'/images/default_user.png'}
-                  alt={creator_address}
+                  src={
+                    nft?.creator?.profile_img_url || '/images/default_user.png'
+                  }
+                  alt={creator_name}
                   width={23}
                 />
               </div>
@@ -51,18 +54,16 @@ export default function RaribleItem({ nft }: any) {
                 alt=""
               />
               <p className="text-sm text-black font-medium ml-2 text-opacity-50">
-                {nft?.supply || 0}
+                {nft?.num_sales || 0}
               </p>
             </div>
           </div>
 
           <h3 className="font-semibold mt-3">
-            {nft?.meta?.name || 'Rarible Collection #999'}
+            {nft?.name ?? alternate_nft_name}
           </h3>
 
-          <p className="text-gray-400 text-sm">
-            {nft?.meta?.description || 'Rarible Collection #999'}
-          </p>
+          <p className="text-gray-400 text-sm">{collection_name}</p>
         </figcaption>
       </figure>
     </div>

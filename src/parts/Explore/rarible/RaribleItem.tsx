@@ -2,12 +2,6 @@ import React from 'react';
 import Img from '@components/Img';
 
 export default function RaribleItem({ nft }: any) {
-  const creator_address = nft?.creators?.account;
-  const display_address = creator_address
-    ? creator_address.substring(0, 12) + '...'
-    : 'Creator';
-  const creator_name = display_address;
-
   return (
     <div className="item relative p-5">
       <figure>
@@ -32,13 +26,13 @@ export default function RaribleItem({ nft }: any) {
                 <img
                   className="max-w-full rounded-full"
                   src={'/images/default_user.png'}
-                  alt={creator_address}
+                  alt={nft?.creators?.account}
                   width={23}
                 />
               </div>
 
               <h3 className="text-sm text-black font-medium ml-2 text-opacity-50 truncate">
-                {creator_name}
+                {nft.creators[0]?.account.substring(0, 12) ?? 'creator'}
               </h3>
             </div>
             <div className="flex items-center">

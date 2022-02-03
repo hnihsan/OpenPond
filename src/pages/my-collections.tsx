@@ -69,7 +69,6 @@ const MyCollections: NextPage = () => {
     };
 
     if (account) {
-      console.log(account);
       init();
     }
   }, [account]);

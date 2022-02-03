@@ -16,7 +16,7 @@ export default {
     }
   },
 
-  async getOwnedAssetsByCollection(collection_addr, size = 20) {
+  async getOwnedAssetsByCollection({ collection_addr, size = 20 }) {
     try {
       let response_string = await get_owned_assets_by_collection(
         collection_addr,

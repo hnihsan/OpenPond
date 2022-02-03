@@ -10,6 +10,7 @@ import RaribleApi from '@services/rarible_api';
 import OpenseaDetail from '@parts/Detail/Opensea/OpenseaDetail';
 
 import { useUser } from '@data/useUser';
+import RaribleDetail from '@parts/Detail/Rarible/detail';
 
 type Props = {};
 
@@ -26,10 +27,17 @@ export default function Detail({}: Props) {
     try {
       setIsLoadingOpenseaAssets(true);
       await Fluence.start({ connectTo: krasnodar[0] });
-      const newAssets = await OpenSeaApi.getOwnedAssetsByCollection({
-        collection_addr: contract,
-      });
 
+      let newAssets = [];
+      if (source === 'opensea') {
+        newAssets = await OpenSeaApi.getOwnedAssetsByCollection({
+          collection_addr: contract,
+        });
+      } else {
+        newAssets = await RaribleApi.getOwnedAssetsByCollection({
+          collection_addr: contract,
+        });
+      }
       setOpenseaAssets(newAssets);
       setIsLoadingOpenseaAssets(false);
     } catch (error) {
@@ -60,9 +68,20 @@ export default function Detail({}: Props) {
             />
           )}
 
-          {source === 'rarible' && 'rarible'}
+          {source === 'rarible' && (
+            <RaribleDetail
+              isLoading={isLoadingOpenseaAssets}
+              assets={openseaAssets}
+            />
+          )}
         </div>
       </section>
     </Layout>
   );
+}
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {}, // will be passed to the page component as props
+  };
 }

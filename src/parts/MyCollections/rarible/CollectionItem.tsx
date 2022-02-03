@@ -22,7 +22,15 @@ export default function RaribleCollectionItem({ collection }: any) {
 
         <figcaption>
           <div className="creator-wrapper flex justify-center">
-            <Link href={`/detail/opensea/${collection?.slug}`}>
+            <Link
+              href={{
+                pathname: `/detail/[contract]`,
+                query: {
+                  contract: `${collection?.id}`,
+                  source: 'rarible',
+                },
+              }}
+            >
               <a className="text-sm text-black font-medium ml-2 text-opacity-50 link-wrapped">
                 {collection?.name} - {collection?.symbol}
               </a>

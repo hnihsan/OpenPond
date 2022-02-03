@@ -31,7 +31,7 @@ const MyCollections: NextPage = () => {
     useState(false);
   const [raribleCollections, setRaribleCollections] = useState([]);
 
-  const loadMoreOpenseaCollection = async () => {
+  const loadOpenseaCollection = async () => {
     try {
       setIsLoadingOpenseaCollection(true);
 
@@ -48,7 +48,7 @@ const MyCollections: NextPage = () => {
     }
   };
 
-  const loadMoreRaribleCollection = async () => {
+  const loadRaribleCollection = async () => {
     try {
       setIsLoadingRaribleCollection(true);
 
@@ -67,8 +67,8 @@ const MyCollections: NextPage = () => {
 
   useEffect(() => {
     const init = async () => {
-      await loadMoreOpenseaCollection();
-      await loadMoreRaribleCollection();
+      await loadOpenseaCollection();
+      await loadRaribleCollection();
     };
 
     if (account) {
@@ -156,7 +156,6 @@ const MyCollections: NextPage = () => {
                   <OpenSeaCollectionItem
                     collections={openseaCollections}
                     isLoading={isLoadingOpenseaCollection}
-                    onLoadMore={loadMoreOpenseaCollection}
                   />
                 )}
                 {source === 'OPENSEA' && currentTab === 'OWNED' && (
@@ -166,7 +165,6 @@ const MyCollections: NextPage = () => {
                   <RaribleCollections
                     collections={raribleCollections}
                     isLoading={isLoadingRaribleCollection}
-                    onLoadMore={loadMoreRaribleCollection}
                   />
                 )}
                 {source === 'RARIBLE' && currentTab === 'OWNED' && (

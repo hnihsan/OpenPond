@@ -31,6 +31,7 @@ export default {
         String(offset),
         String(limit)
       );
+
       let response = JSON.parse(response_string);
       return response.assets;
     } catch (error) {

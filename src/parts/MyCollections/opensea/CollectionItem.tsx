@@ -21,7 +21,15 @@ export default function OpenseaCollectionItem({ collection }: any) {
         <figcaption>
           <div className="creator-wrapper flex justify-between">
             <div className="flex items-center mt-3">
-              <Link href={`/detail/opensea/${collection?.slug}`}>
+              <Link
+                href={{
+                  pathname: `/detail/[contract]`,
+                  query: {
+                    contract: `${collection?.primary_asset_contracts[0]?.address}`,
+                    source: 'opensea',
+                  },
+                }}
+              >
                 <a className="text-sm text-black font-medium ml-2 text-opacity-50 link-wrapped text-center">
                   {collection?.name}
                 </a>
@@ -41,12 +49,6 @@ export default function OpenseaCollectionItem({ collection }: any) {
               </p>
             </div>
           </div>
-
-          {/* <h3 className="font-semibold mt-3">
-            {collection?.name ?? alternate_collection_name}
-          </h3>
-
-          <p className="text-gray-400 text-sm">{collection_name}</p> */}
         </figcaption>
       </figure>
     </div>

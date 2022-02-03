@@ -1,20 +1,23 @@
 import TrendingCardSkeleton from '@components/Skeleton/TrendingCardSkeleton';
-import CollectionItem from '@parts/MyCollections/opensea/CollectionItem';
+import OpenSeaItem from '@parts/Explore/opensea/OpenseaItem';
+import React from 'react';
 
 type Props = {
-  collections: any[];
+  assets: any[];
   isLoading: boolean;
 };
-export default function Index({ collections, isLoading }: Props) {
+
+export default function OpenseaDetail({ assets, isLoading }: Props) {
   return (
     <>
-      {collections.length === 0 && !isLoading && (
-        <h3 className="mt-10">No collections to display</h3>
+      {assets.length === 0 && !isLoading && (
+        <h3 className="mt-10">No assets to display</h3>
       )}
-      <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6">
-        {collections.map((collection, i) => {
-          return <CollectionItem collection={collection} key={i} />;
+      <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6 -mx-5">
+        {assets.map((nft, i) => {
+          return <OpenSeaItem nft={nft} key={i} />;
         })}
+
         {isLoading && (
           <>
             <div className="px-5">

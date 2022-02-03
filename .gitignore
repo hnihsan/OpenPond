@@ -54,7 +54,3 @@ yarn-error.log*
 Cargo.lock
 **/target
 
-
-# Fluence browser
-/public/avm.wasm
-/public/runnerScript.web.js

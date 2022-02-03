@@ -2,6 +2,7 @@
 
 An simple web application for displaying NFTs from OpenSea and Rarible marketplaces, including your owned/created NFTs which linked to your wallet. Built on [Fluence](https://fluence.network/) and [Next.js](https://nextjs.org/)
 
+Overview : https://youtu.be/fqvwk3i6yR8
 ## Usage
 
 Build and run the application

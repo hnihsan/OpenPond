@@ -15,11 +15,11 @@ export default function OpenSeaItem({ nft }: any) {
       <figure>
         <Img
           className="rounded-xl w-full"
-          src={
+          src={`/api/imageproxy?url=${encodeURIComponent(
             nft?.image_url ||
-            nft?.collection?.large_image_url ||
-            '/images/fluence.png'
-          }
+              nft?.collection?.large_image_url ||
+              `${process.env.NEXT_PUBLIC_FRONTEND_URL}/images/fluence.png`
+          )}`}
           alt="trending-icon"
           width="100%"
           height="100%"
@@ -31,7 +31,9 @@ export default function OpenSeaItem({ nft }: any) {
               <div className="avatar-wrapper relative">
                 <img
                   className="max-w-full rounded-full"
-                  src={nft?.creator?.profile_img_url || '/images/default_user.png'}
+                  src={
+                    nft?.creator?.profile_img_url || '/images/default_user.png'
+                  }
                   alt={creator_name}
                   width={23}
                 />
@@ -56,7 +58,9 @@ export default function OpenSeaItem({ nft }: any) {
             </div>
           </div>
 
-          <h3 className="font-semibold mt-3">{nft?.name ?? alternate_nft_name}</h3>
+          <h3 className="font-semibold mt-3">
+            {nft?.name ?? alternate_nft_name}
+          </h3>
 
           <p className="text-gray-400 text-sm">{collection_name}</p>
         </figcaption>

@@ -8,13 +8,17 @@ import OpenSeaItem from './OpenSeaItem';
 import RaribleItem from './RaribleItem';
 import FakeNfts from '@data/fake-nfts.json';
 
+// Fluence test
+import { Fluence, setLogLevel, FluencePeer } from '@fluencelabs/fluence';
+import { krasnodar, Node } from '@fluencelabs/fluence-network-environment';
+import OpenSeaApi from '@services/opensea_api';
+import RaribleApi from '@services/rarible_api';
+
 interface Props {
   classname?: string | null;
-  openseaNfts: [];
-  raribleNfts: [];
 }
 
-export default function Explore({ classname, openseaNfts, raribleNfts }: Props) {
+export default function Explore({ classname }: Props) {
   const [nfts, setNfts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [source, setSource] = useState('OPENSEA');
@@ -27,15 +31,26 @@ export default function Explore({ classname, openseaNfts, raribleNfts }: Props) 
 
   const loadMore = async () => {
     try {
-      setIsLoading(true);
-      const response: any = await axios.get(
-        `https://testnets-api.opensea.io/api/v1/assets?order_direction=desc&offset=${offsetOpensea}&limit=25`,
-      );
-      const newNFTs = response.data?.assets;
-      setOffsetOpensea(offsetOpensea + 1);
-      setNfts([...nfts, ...newNFTs]);
+      // setIsLoading(true);
+      // const response: any = await axios.get(
+      //   `https://testnets-api.opensea.io/api/v1/assets?order_direction=desc&offset=${offsetOpensea}&limit=25`
+      // );
+      // const newNFTs = response.data?.assets;
+      // setOffsetOpensea(offsetOpensea + 1);
+      // setNfts([...nfts, ...newNFTs]);
 
-      console.log(nfts);
+      // console.log(nfts);
+
+      setIsLoading(true);
+      console.log(krasnodar[0]);
+      await Fluence.start({ connectTo: krasnodar[0] });
+      console.log(
+        'created a Fluence client %s with relay %s',
+        Fluence.getStatus().peerId,
+        Fluence.getStatus().relayPeerId
+      );
+      const newAssets = await OpenSeaApi.getAllAssets();
+      console.log(newAssets);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
@@ -47,7 +62,7 @@ export default function Explore({ classname, openseaNfts, raribleNfts }: Props) 
     try {
       setIsLoadingRarible(true);
       const response: any = await axios.get(
-        `https://ethereum-api.rarible.org/v0.1/nft/items/all?size=20&continuation=${continuation}`,
+        `https://ethereum-api.rarible.org/v0.1/nft/items/all?size=20&continuation=${continuation}`
       );
       const raribleResponse = response.data;
       const newNfts = raribleResponse.items;
@@ -65,7 +80,7 @@ export default function Explore({ classname, openseaNfts, raribleNfts }: Props) 
 
   useEffect(() => {
     loadMore();
-    loadMoreRarible();
+    // loadMoreRarible();
   }, []);
 
   return (
@@ -111,7 +126,7 @@ export default function Explore({ classname, openseaNfts, raribleNfts }: Props) 
         {/* opensea content */}
         <div className="content-body grid grid-cols-1 md:grid-cols-4 mt-6 -mx-5">
           {source === 'OPENSEA' &&
-            nfts.map((nft, i) => {
+            [].map((nft, i) => {
               return <OpenSeaItem nft={nft} key={i} />;
             })}
 
@@ -144,7 +159,7 @@ export default function Explore({ classname, openseaNfts, raribleNfts }: Props) 
         )}
 
         {source === 'RARIBLE' &&
-          raribleNfts.map((nft, i) => (
+          [].map((nft, i) => (
             <div className="rarible_item" key={i}>
               <RaribleItem nft={nft} />
             </div>

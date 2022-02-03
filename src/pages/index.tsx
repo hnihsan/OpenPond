@@ -7,34 +7,34 @@ import { krasnodar, Node } from '@fluencelabs/fluence-network-environment';
 import OpenSeaApi from '../services/opensea_api';
 import RaribleApi from '../services/rarible_api';
 
-const Home: NextPage = ({ openseaNfts, raribleNfts }) => {
+const Home: NextPage = ({ openseaNfts, raribleNfts }: any) => {
   return (
     <>
       <Layout>
         <section className="my-10">
-          <Explore openseaNfts={openseaNfts} raribleNfts={raribleNfts} />
+          {/* <Explore openseaNfts={openseaNfts} raribleNfts={raribleNfts} /> */}
+          <Explore />
         </section>
       </Layout>
     </>
   );
 };
 
-export async function getServerSideProps() {
-  await Fluence.start({ connectTo: krasnodar[0] });
-  console.log(
-    'created a Fluence client %s with relay %s',
-    Fluence.getStatus().peerId,
-    Fluence.getStatus().relayPeerId,
-  );
-  const opensea_all_assets = await OpenSeaApi.getAllAssets();
-  const rarible_all_assets = await RaribleApi.getAllAssets();
-
-  return {
-    props: {
-      openseaNfts: opensea_all_assets,
-      raribleNfts: rarible_all_assets,
-    },
-  };
-}
+// export async function getServerSideProps() {
+// await Fluence.start({ connectTo: krasnodar[0] });
+// console.log(
+//   'created a Fluence client %s with relay %s',
+//   Fluence.getStatus().peerId,
+//   Fluence.getStatus().relayPeerId
+// );
+// const opensea_all_assets = await OpenSeaApi.getAllAssets();
+// const rarible_all_assets = await RaribleApi.getAllAssets();
+// return {
+//   props: {
+//     openseaNfts: opensea_all_assets,
+//     raribleNfts: rarible_all_assets,
+//   },
+// };
+// }
 
 export default Home;

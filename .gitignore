@@ -37,7 +37,7 @@ yarn-error.log*
 *.tsbuildinfo
 
 # Wasm files
-*.wasm
+# *.wasm
 *.wat
 
 # REPL history files
@@ -47,7 +47,7 @@ yarn-error.log*
 /artifacts
 
 # Aqua compiled
-**/_aqua
+# **/_aqua
 
 **/**.bak
 **/**.bk

@@ -1,7 +1,9 @@
 import TrendingCardSkeleton from '@components/Skeleton/TrendingCardSkeleton';
+import { useUser } from '@data/useUser';
 
 import RaribleItem from '@parts/Explore/rarible/RaribleItem';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 type Props = {
   assets: any[];
@@ -9,6 +11,19 @@ type Props = {
 };
 
 export default function RaribleDetail({ assets, isLoading }: Props) {
+  const router = useRouter();
+  const { user, mutate } = useUser({});
+
+  useEffect(() => {
+    if (!user?.isLoggedIn) {
+      console.log('yers here');
+      router.push('/');
+    } else {
+      console.log('masuk sini');
+    }
+    console.log(user);
+  }, [user]);
+
   return (
     <>
       {assets.length === 0 && !isLoading && (

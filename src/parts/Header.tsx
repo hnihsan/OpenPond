@@ -8,10 +8,16 @@ import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core';
 import { useUser } from '@data/useUser';
 import { injected } from '@utils/Connector';
 import { login, logout } from '@services/auth';
+
+import UAuth from '@uauth/js';
 export default function Header() {
   const { user, loading, mutate } = useUser({});
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [showNavbar, setShowNavbar] = useState(false);
+
+  const [authUD, setAuthUD] = useState(null);
+  const [currentAccount, setCurrentAccount] = useState(null);
 
   const toggle = () => {
     setShowNavbar(!showNavbar);
@@ -40,6 +46,7 @@ export default function Header() {
     try {
       await logout();
       deactivate();
+      mutate();
     } catch (error) {
       console.error(error);
       return Promise.reject();
@@ -55,19 +62,35 @@ export default function Header() {
   }, [error]);
 
   useEffect(() => {
-    if (account) {
-      mutate(
-        login({
-          address: account,
-        })
-      );
+    const uauth = new UAuth({
+      clientID: process.env.NEXT_PUBLIC_UNSTOPPABLE_CLIENT_ID,
+      redirectUri: process.env.NEXT_PUBLIC_UNSTOPPABLE_REDIRECT_URI,
+    });
+
+    setAuthUD(uauth);
+  }, []);
+
+  const handlerLoginUnstoppable = async () => {
+    try {
+      const authorization = await authUD.loginWithPopup();
+      console.log(authorization);
+      const account = {
+        domain: authorization.idToken.sub,
+        wallet: authorization.idToken.wallet_address,
+      };
+      await login({
+        account,
+        method: 'UNSTOPPABLE',
+      });
+      mutate();
+    } catch (error) {
+      console.error(error);
     }
-  }, [account]);
+  };
 
   useEffect(() => {
-    if (user?.address) {
-      connect();
-    }
+    console.log(user);
+    console.log(currentAccount);
   }, [user]);
 
   return (
@@ -76,12 +99,7 @@ export default function Header() {
         <div className="h-full w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2 px-3">
           <Link href="/" passHref>
             <div className="flex items-center justify-center cursor-pointer">
-              <Image
-                src="/images/fluence.png"
-                alt="logo"
-                width={20}
-                height={20}
-              />
+              <Image src="/images/fluence.png" alt="logo" width={20} height={20} />
               <a className="font-bold ml-1 text-2lg">OpenPond</a>
             </div>
           </Link>
@@ -102,22 +120,29 @@ export default function Header() {
           >
             <ul className="list-reset lg:flex justify-center flex-1 items-center"></ul>
 
-            <div className="inline-flex flex-col lg:flex-row text-left justify-start">
-              {!active && (
-                <button
-                  className="inline-block border rounded-full px-5 py-2 text-left"
-                  onClick={connect}
-                >
-                  Connect Metamask
-                </button>
+            <div className="inline-flex flex-col lg:flex-row text-left justify-start gap-x-3">
+              {!user?.isLoggedIn && (
+                <>
+                  <button
+                    className="inline-block border rounded-full px-5 py-2 text-left"
+                    onClick={connect}
+                  >
+                    Connect Metamask
+                  </button>
+                  <button
+                    className="inline-block border rounded-full px-5 py-2 text-left bg-blue-500 text-white hover:bg-blue-600"
+                    onClick={handlerLoginUnstoppable}
+                  >
+                    Login with Unstoppable {isLoggedIn}
+                  </button>
+                </>
               )}
-
-              {active && (
+              {user?.isLoggedIn && (
                 <li className="flex items-center">
                   <div className="dropdown flex items-center justify-between cursor-pointer py-3 px-4">
                     <Link href={`#`}>
-                      <a className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-100px font-bold text-sm ml-2">
-                        {account}
+                      <a className="border px-5 py-2 border rounded-full font-bold text-sm ml-2">
+                        {user?.account?.domain}
                       </a>
                     </Link>
 

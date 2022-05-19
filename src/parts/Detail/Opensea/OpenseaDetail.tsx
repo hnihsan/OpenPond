@@ -1,6 +1,8 @@
 import TrendingCardSkeleton from '@components/Skeleton/TrendingCardSkeleton';
+import { useUser } from '@data/useUser';
 import OpenSeaItem from '@parts/Explore/opensea/OpenseaItem';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
 type Props = {
   assets: any[];
@@ -8,6 +10,14 @@ type Props = {
 };
 
 export default function OpenseaDetail({ assets, isLoading }: Props) {
+  const router = useRouter();
+  const { user, mutate } = useUser({});
+
+  useEffect(() => {
+    if (!user?.isLoggedIn) {
+      router.push('/');
+    }
+  }, [user]);
   return (
     <>
       {assets.length === 0 && !isLoading && (

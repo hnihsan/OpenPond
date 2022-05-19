@@ -12,9 +12,12 @@ import { Fluence } from '@fluencelabs/fluence';
 import { krasnodar } from '@fluencelabs/fluence-network-environment';
 import OpenSeaApi from '@services/opensea_api';
 import RaribleApi from '@services/rarible_api';
+import { useUser } from '@data/useUser';
 
 const MyCollections: NextPage = () => {
   const { account } = useWeb3React();
+
+  const { user, loading, mutate } = useUser({});
 
   const [source, setSource] = useState('OPENSEA');
 
@@ -34,7 +37,7 @@ const MyCollections: NextPage = () => {
 
       await Fluence.start({ connectTo: krasnodar[0] });
       const collections = await OpenSeaApi.getOwnedCollections({
-        owner_address: account,
+        owner_address: account ?? user?.account?.wallet,
       });
 
       setOpenseaCollections(collections);
@@ -51,7 +54,7 @@ const MyCollections: NextPage = () => {
 
       await Fluence.start({ connectTo: krasnodar[0] });
       const collections = await RaribleApi.getOwnedCollections({
-        owner_address: account,
+        owner_address: account ?? user?.account?.wallet,
       });
 
       setRaribleCollections(collections);
@@ -68,12 +71,12 @@ const MyCollections: NextPage = () => {
       await loadRaribleCollection();
     };
 
-    if (account) {
+    if (account || user) {
       init();
     }
-  }, [account]);
+  }, [account, user]);
 
-  if (!account) {
+  if (!account && !user) {
     return (
       <Layout>
         <section className="my-10">
